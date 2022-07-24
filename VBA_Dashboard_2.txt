@@ -1,0 +1,541 @@
+Sub main()
+
+' (0) Deleting Exist Sheets
+For s = 1 To 5 Step 1
+    For i = 1 To Application.ActiveWorkbook.Sheets.Count
+            For j = 1 To 7 Step 1
+                On Error Resume Next
+                If Application.ActiveWorkbook.Sheets(i).Name = Worksheets("Control").Cells(1, j).Value Then
+                    counter = 1
+                End If
+            Next j
+        If counter = 0 Then
+        Application.DisplayAlerts = False 'switching off the alert button
+        Application.ActiveWorkbook.Sheets(i).Delete
+        End If
+        counter = 0
+    Next i
+Next s
+' (1) Making New List
+laptechnumbermix = Worksheets("Test Technician Form").Cells(Rows.Count, 1).End(xlUp).Row - 1
+maintechnumbermix = Worksheets("Main Technician Form").Cells(Rows.Count, 1).End(xlUp).Row - 1
+c4technumbermix = Worksheets("T4 Technician Form").Cells(Rows.Count, 1).End(xlUp).Row - 1
+mobiletechnumbermix = Worksheets("Mobile Technician Form").Cells(Rows.Count, 1).End(xlUp).Row - 1
+receptiontechnumbermix = Worksheets("Reception Technician Form").Cells(Rows.Count, 1).End(xlUp).Row - 1
+Worksheets.Add.Name = "List"
+Worksheets("List").Cells(1, 2) = "Test Technisian"
+
+For i = 1 To laptechnumbermix Step 1
+    Worksheets("List").Cells(i + 1, 1) = i
+    Worksheets("List").Cells(i + 1, 2).Value = Worksheets("Test Technician Form").Cells(i + 1, 2).Value
+    Worksheets("List").Cells(i + 1, 3).Value = Worksheets("Test Technician Form").Cells(i + 1, 3).Value
+    counter = counter + 1
+Next i
+Worksheets("List").Cells(1 + counter + 1, 2) = "Main Technisian"
+countt = 0
+For i = (1 + counter + 1) To (1 + counter + maintechnumbermix) Step 1
+    Worksheets("List").Cells(i + 1, 1) = i
+    countt = countt + 1
+    Worksheets("List").Cells(i + 1, 2).Value = Worksheets("Main Technician Form").Cells(countt + 1, 2).Value
+    Worksheets("List").Cells(i + 1, 3).Value = Worksheets("Main Technician Form").Cells(countt + 1, 3).Value
+    counter = counter + 1
+Next i
+
+Worksheets("List").Cells(1 + counter + 2, 2) = "T4 Technisian"
+countt = 0
+For i = (1 + counter + 2) To (2 + counter + c4technumbermix) Step 1
+    Worksheets("List").Cells(i + 1, 1) = i
+    countt = countt + 1
+    Worksheets("List").Cells(i + 1, 2).Value = Worksheets("T4 Technician Form").Cells(countt + 1, 2).Value
+    Worksheets("List").Cells(i + 1, 3).Value = Worksheets("T4 Technician Form").Cells(countt + 1, 3).Value
+    counter = counter + 1
+Next i
+
+Worksheets("List").Cells(1 + counter + 3, 2) = "Mobile Technisian"
+countt = 0
+For i = (1 + counter + 3) To (3 + counter + mobiletechnumbermix) Step 1
+    Worksheets("List").Cells(i + 1, 1) = i
+    countt = countt + 1
+    Worksheets("List").Cells(i + 1, 2).Value = Worksheets("Mobile Technician Form").Cells(countt + 1, 2).Value
+    Worksheets("List").Cells(i + 1, 3).Value = Worksheets("Mobile Technician Form").Cells(countt + 1, 3).Value
+    counter = counter + 1
+Next i
+
+Worksheets("List").Cells(1 + counter + 4, 2) = "Reception Technisian"
+countt = 0
+For i = (1 + counter + 4) To (4 + counter + receptiontechnumbermix) Step 1
+    Worksheets("List").Cells(i + 1, 1) = i
+    countt = countt + 1
+    Worksheets("List").Cells(i + 1, 2).Value = Worksheets("Reception Technician Form").Cells(countt + 1, 2).Value
+    Worksheets("List").Cells(i + 1, 3).Value = Worksheets("Reception Technician Form").Cells(countt + 1, 3).Value
+    counter = counter + 1
+Next i
+
+' (2) getting file
+
+nameofwork = Application.ThisWorkbook.Name
+myfile = Application.GetOpenFilename(, , "Please searching for karsanji")
+Workbooks.Open myfile
+nameofwork1 = Application.ActiveWorkbook.Name
+Workbooks(nameofwork1).Sheets(Workbooks(nameofwork1).Sheets.Count).Copy after:=Workbooks(nameofwork).Sheets("Reception Technician Form")
+Workbooks(nameofwork).Sheets(Workbooks(nameofwork).Sheets.Count).Name = "Karsanji"
+Workbooks(nameofwork1).Close
+
+nameofwork = Application.ThisWorkbook.Name
+myfile = Application.GetOpenFilename(, , "Please searching for Ojrat")
+Workbooks.Open myfile
+nameofwork1 = Application.ActiveWorkbook.Name
+Workbooks(nameofwork1).Sheets(Workbooks(nameofwork1).Sheets.Count).Copy after:=Workbooks(nameofwork).Sheets("Karsanji")
+Workbooks(nameofwork).Sheets(Workbooks(nameofwork).Sheets.Count).Name = "Ojrat"
+Workbooks(nameofwork1).Close
+
+nameofwork = Application.ThisWorkbook.Name
+myfile = Application.GetOpenFilename(, , "Please searching for Taakhir")
+Workbooks.Open myfile
+nameofwork1 = Application.ActiveWorkbook.Name
+Workbooks(nameofwork1).Sheets(Workbooks(nameofwork1).Sheets.Count).Copy after:=Workbooks(nameofwork).Sheets("Ojrat")
+Workbooks(nameofwork).Sheets(Workbooks(nameofwork).Sheets.Count).Name = "Taakhir"
+Workbooks(nameofwork1).Close
+
+nameofwork = Application.ThisWorkbook.Name
+myfile = Application.GetOpenFilename(, , "Please searching for Ezafe Kari")
+Workbooks.Open myfile
+nameofwork1 = Application.ActiveWorkbook.Name
+Workbooks(nameofwork1).Sheets(Workbooks(nameofwork1).Sheets.Count).Copy after:=Workbooks(nameofwork).Sheets("Taakhir")
+Workbooks(nameofwork).Sheets(Workbooks(nameofwork).Sheets.Count).Name = "Ezafe Kari"
+Workbooks(nameofwork1).Close
+
+nameofwork = Application.ThisWorkbook.Name
+myfile = Application.GetOpenFilename(, , "Please searching for Kartabl")
+Workbooks.Open myfile
+nameofwork1 = Application.ActiveWorkbook.Name
+Workbooks(nameofwork1).Sheets(Workbooks(nameofwork1).Sheets.Count).Copy after:=Workbooks(nameofwork).Sheets("Ezafe Kari")
+Workbooks(nameofwork).Sheets(Workbooks(nameofwork).Sheets.Count).Name = "Kartabl"
+Workbooks(nameofwork1).Close
+
+nameofwork = Application.ThisWorkbook.Name
+myfile = Application.GetOpenFilename(, , "Please searching for Marjoo")
+Workbooks.Open myfile
+nameofwork1 = Application.ActiveWorkbook.Name
+Workbooks(nameofwork1).Sheets(Workbooks(nameofwork1).Sheets.Count).Copy after:=Workbooks(nameofwork).Sheets("Kartabl")
+Workbooks(nameofwork).Sheets(Workbooks(nameofwork).Sheets.Count).Name = "Marjoo"
+Workbooks(nameofwork1).Close
+
+nameofwork = Application.ThisWorkbook.Name
+myfile = Application.GetOpenFilename(, , "Please searching for Takhfifat")
+Workbooks.Open myfile
+nameofwork1 = Application.ActiveWorkbook.Name
+Workbooks(nameofwork1).Sheets(Workbooks(nameofwork1).Sheets.Count).Copy after:=Workbooks(nameofwork).Sheets("Marjoo")
+Workbooks(nameofwork).Sheets(Workbooks(nameofwork).Sheets.Count).Name = "Takhfifat"
+Workbooks(nameofwork1).Close
+
+nameofwork = Application.ThisWorkbook.Name
+myfile = Application.GetOpenFilename(, , "Please searching for Paziresh")
+Workbooks.Open myfile
+nameofwork1 = Application.ActiveWorkbook.Name
+Workbooks(nameofwork1).Sheets(Workbooks(nameofwork1).Sheets.Count).Copy after:=Workbooks(nameofwork).Sheets("Takhfifat")
+Workbooks(nameofwork).Sheets(Workbooks(nameofwork).Sheets.Count).Name = "Paziresh"
+Workbooks(nameofwork1).Close
+
+' (3) Proccess on Ojrat sheet
+counter = counter + 5
+columncounter = 3
+rowscounterojrat = Worksheets("Ojrat").Cells(Rows.Count, 1).End(xlUp).Row
+rowscounterlist = Worksheets("List").Cells(Rows.Count, 2).End(xlUp).Row
+
+columncounter = columncounter + 1
+Worksheets("List").Cells(1, columncounter).Value = Worksheets("Ojrat").Cells(1, 2).Value
+For i = 2 To rowscounterojrat Step 1
+    strr = Worksheets("Ojrat").Cells(i, 1).Value
+    If strr <> "" Then
+        For j = 2 To rowscounterlist Step 1
+            Size = Len(strr)
+            str1 = Worksheets("List").Cells(j, 2).Value
+                For s = 1 To Len(str1) Step 1
+                    str2 = Mid(str1, s, Size)
+                    If str2 = strr Then
+                        Worksheets("List").Cells(j, columncounter).Value = Worksheets("Ojrat").Cells(i, 2).Value
+                        Worksheets("List").Cells(j, columncounter).Borders.LineStyle = xlContinuous
+                    End If
+                Next s
+        Next j
+    End If
+Next i
+
+For j = 2 To rowscounterlist Step 1
+    If ((Worksheets("List").Cells(j, 1).Value <> "") And (Worksheets("List").Cells(j, columncounter).Value = "")) Then
+        Worksheets("List").Cells(j, columncounter).Value = 0
+    End If
+Next j
+' (3) Proccess on Taakhir sheet
+
+rowscountertaakhir = Worksheets("Taakhir").Cells(Rows.Count, 1).End(xlUp).Row
+
+columncounter = columncounter + 1
+Worksheets("List").Cells(1, columncounter).Value = Worksheets("Taakhir").Cells(1, 5).Value
+Worksheets("List").Cells(1, columncounter).Borders.LineStyle = xlContinuous
+columncounter = columncounter + 1
+Worksheets("List").Cells(1, columncounter).Value = Worksheets("Taakhir").Cells(1, 6).Value
+Worksheets("List").Cells(1, columncounter).Borders.LineStyle = xlContinuous
+
+For i = 2 To rowscountertaakhir Step 1
+    For j = 2 To rowscounterlist Step 1
+                    If Worksheets("List").Cells(j, 3).Value = Worksheets("Taakhir").Cells(i, 1).Value Then
+                        Worksheets("List").Cells(j, columncounter - 1).Value = Worksheets("Taakhir").Cells(i, 5).Value
+                        Worksheets("List").Cells(j, columncounter - 1).Borders.LineStyle = xlContinuous
+                        Worksheets("List").Cells(j, columncounter).Value = Worksheets("Taakhir").Cells(i, 6).Value
+                        Worksheets("List").Cells(j, columncounter).Borders.LineStyle = xlContinuous
+                     End If
+    Next j
+Next i
+For j = 2 To rowscounterlist Step 1
+    If ((Worksheets("List").Cells(j, columncounter - 1).Value = "") And (Worksheets("List").Cells(j, 1).Value <> "")) Then
+        Worksheets("List").Cells(j, columncounter - 1).Value = 0
+    End If
+    If ((Worksheets("List").Cells(j, columncounter).Value = "") And (Worksheets("List").Cells(j, 1).Value <> "")) Then
+        Worksheets("List").Cells(j, columncounter).Value = 0
+    End If
+Next j
+
+' (4) Proccess on Ezafe Kari sheet
+
+rowscounterezafekari = Worksheets("Ezafe Kari").Cells(Rows.Count, 1).End(xlUp).Row
+
+columncounter = columncounter + 1
+Worksheets("List").Cells(1, columncounter).Value = Worksheets("Ezafe Kari").Cells(1, 5).Value
+
+For i = 2 To rowscounterezafekari Step 1
+    For j = 2 To rowscounterlist Step 1
+                    If Worksheets("List").Cells(j, 3).Value = Worksheets("Ezafe Kari").Cells(i, 1).Value Then
+                        Worksheets("List").Cells(j, columncounter).Value = Worksheets("Ezafe Kari").Cells(i, 5).Value
+                     End If
+    Next j
+Next i
+For j = 2 To rowscounterlist Step 1
+    If ((Worksheets("List").Cells(j, columncounter).Value = "") And (Worksheets("List").Cells(j, 1).Value <> "")) Then
+        Worksheets("List").Cells(j, columncounter).Value = 0
+    End If
+Next j
+
+' (5) Proccess on kartabl sheet
+rowscounterkartabl = Worksheets("Kartabl").Cells(Rows.Count, 1).End(xlUp).Row
+
+columncounter = columncounter + 1
+Worksheets("List").Cells(1, columncounter).Value = "ÊÚÏÇÏ ÊÎÕíÕ åÇí ˜ÇãíæÊÑí"
+For i = 2 To rowscounterlist Step 1
+    strr = Worksheets("List").Cells(i, 2).Value
+    If strr <> "" Then
+        For j = 2 To rowscounterkartabl Step 1
+            Size = Len(strr)
+            str1 = Worksheets("Kartabl").Cells(j, 3).Value
+                For s = 1 To Len(str1) Step 1
+                    str2 = Mid(str1, s, Size)
+                    If str2 = strr Then
+                        Worksheets("List").Cells(i, columncounter).Value = Worksheets("List").Cells(i, columncounter).Value + 1
+                    End If
+                Next s
+        Next j
+    End If
+Next i
+
+For j = 2 To rowscounterlist Step 1
+    If ((Worksheets("List").Cells(j, 1).Value <> "") And (Worksheets("List").Cells(j, columncounter).Value = "")) Then
+        Worksheets("List").Cells(j, columncounter).Value = "-"
+    End If
+Next j
+coutt = 0
+
+' (6) Proccess on Marjoo sheet
+rowscountermarjoo = Worksheets("Marjoo").Cells(Rows.Count, 1).End(xlUp).Row
+
+columncounter = columncounter + 1
+Worksheets("List").Cells(1, columncounter).Value = "ãíÒÇä ÎÓÇÑÊ ãÑÌæÚí"
+For i = 2 To rowscounterlist Step 1
+    strr = Worksheets("List").Cells(i, 2).Value
+    If strr <> "" Then
+        For j = 2 To rowscountermarjoo Step 1
+            Size = Len(strr)
+            str1 = Worksheets("Marjoo").Cells(j, 2).Value
+                For s = 1 To Len(str1) Step 1
+                    str2 = Mid(str1, s, Size)
+                    If str2 = strr Then
+                        Worksheets("List").Cells(i, columncounter).Value = Worksheets("List").Cells(i, columncounter).Value + Worksheets("Marjoo").Cells(i, 47).Value
+                    End If
+                Next s
+        Next j
+    End If
+Next i
+
+For j = 2 To rowscounterlist Step 1
+    If ((Worksheets("List").Cells(j, 1).Value <> "") And (Worksheets("List").Cells(j, columncounter).Value = "")) Then
+        Worksheets("List").Cells(j, columncounter).Value = "0"
+    End If
+Next j
+
+' (6) Proccess on Takhfifat sheet
+rowscountertakhfifat = Worksheets("Takhfifat").Cells(Rows.Count, 1).End(xlUp).Row
+
+columncounter = columncounter + 1
+Worksheets("List").Cells(1, columncounter).Value = "ãíÒÇä ÊÎÝíÝÇÊ"
+For i = 2 To rowscountertakhfifat Step 1
+    strr = Worksheets("Takhfifat").Cells(i, 3).Value
+    If strr <> "" Then
+        For j = 2 To rowscounterlist Step 1
+            Size = Len(strr)
+            str1 = Worksheets("List").Cells(j, 2).Value
+                For s = 1 To Len(str1) Step 1
+                    str2 = Mid(str1, s, Size)
+                    If str2 = strr Then
+                        Worksheets("List").Cells(j, columncounter).Value = Worksheets("List").Cells(j, columncounter).Value + Worksheets("Takhfifat").Cells(i, 4).Value
+                    End If
+                Next s
+        Next j
+    End If
+Next i
+
+For j = 2 To rowscounterlist Step 1
+    If ((Worksheets("List").Cells(j, 1).Value <> "") And (Worksheets("List").Cells(j, columncounter).Value = "")) Then
+        Worksheets("List").Cells(j, columncounter).Value = "0"
+    End If
+Next j
+
+' (7) Proccess on Paziresh sheet
+rowscounterpaziresh = Worksheets("Paziresh").Cells(Rows.Count, 1).End(xlUp).Row
+
+columncounter = columncounter + 1
+Worksheets("List").Cells(1, columncounter).Value = "ÊÚÏÇÏ ÞÈÖ ÐíÑÔ ˜ÑÏå"
+For i = 2 To rowscounterpaziresh Step 1
+    strr = Worksheets("Paziresh").Cells(i, 1).Value
+    If strr <> "" Then
+        For j = 2 To rowscounterlist Step 1
+            Size = Len(strr)
+            str1 = Worksheets("List").Cells(j, 2).Value
+                For s = 1 To Len(str1) Step 1
+                    str2 = Mid(str1, s, Size)
+                    If str2 = strr Then
+                        Worksheets("List").Cells(j, columncounter).Value = Worksheets("Paziresh").Cells(i, 2).Value
+                    End If
+                Next s
+        Next j
+    End If
+Next i
+
+For j = 2 To rowscounterlist Step 1
+    If ((Worksheets("List").Cells(j, 1).Value <> "") And (Worksheets("List").Cells(j, columncounter).Value = "")) Then
+        Worksheets("List").Cells(j, columncounter).Value = "-"
+    End If
+Next j
+
+' (8) Proccess on Karsanji sheet
+countt = 0
+For i = (columncounter + 1) To (columncounter + 10) Step 1
+    countt = countt + 1
+    Worksheets("List").Cells(1, i).Value = Worksheets("Control").Cells(2, countt).Value
+Next i
+
+rowscounterkarsanji = Worksheets("Karsanji").Cells(Rows.Count, 1).End(xlUp).Row
+columnscounterkarsanji = Worksheets("Karsanji").Cells(1, Columns.Count).End(xlToLeft).Column
+columnscounterlist = Worksheets("List").Cells(1, Columns.Count).End(xlToLeft).Column + 1
+
+For i = 2 To rowscounterlist Step 1
+    strr = Worksheets("List").Cells(i, 2).Value
+    If strr <> "" Then
+        For j = 2 To rowscounterkarsanji Step 1
+            Size = Len(strr)
+            str1 = Worksheets("Karsanji").Cells(j, 1).Value
+                For s = 1 To Len(str1) Step 1
+                    str2 = Mid(str1, s, Size)
+                    If str2 = strr Then
+                        For t = 1 To columnscounterkarsanji Step 1
+                            For k = 1 To columnscounterlist Step 1
+                                If Worksheets("Karsanji").Cells(1, t).Value = Worksheets("List").Cells(1, k).Value Then
+                                    Worksheets("List").Cells(i, k).Value = Worksheets("Karsanji").Cells(j, t).Value
+                                End If
+                            Next k
+                        Next t
+                    End If
+                Next s
+        Next j
+    End If
+Next i
+
+For j = 2 To rowscounterlist Step 1
+    For i = columncounter To columncounter + 10 Step 1
+        If ((Worksheets("List").Cells(j, 1).Value <> "") And (Worksheets("List").Cells(j, i).Value = "")) Then
+            Worksheets("List").Cells(j, i).Value = "-"
+        End If
+    Next i
+Next j
+
+' (9) Calculating Times for every columns
+columnscounterlist = Worksheets("List").Cells(1, Columns.Count).End(xlToLeft).Column
+
+times = 0
+numbers = 0
+For l = 3 To 0 Step -1
+    For i = 2 To rowscounterlist Step 1
+    times = 0
+        strr = Worksheets("List").Cells(i, columnscounterlist - l).Value
+        If strr <> "" Then
+                Size = Len(strr)
+                    For s = 1 To Len(strr) Step 1
+                        str2 = Mid(strr, s, 1)
+                        If str2 = "D" Then
+                            counter = 0
+                            For j = s To 1 Step -1
+                                temp = Mid(strr, j, 1)
+                                If temp <> "-" Then
+                                    counter = counter + 1
+                                Else
+                                    GoTo downn1
+                                End If
+                            Next j
+downn1:
+                            str3 = Mid(strr, s - counter + 1, counter - 1)
+                            numbers = CLng(str3)
+                            times = times + numbers * 24 * 60
+                        End If
+                        If str2 = "H" Then
+                            counter = 0
+                            For j = s To 1 Step -1
+                                temp = Mid(strr, j, 1)
+                                If temp <> "-" Then
+                                    counter = counter + 1
+                                Else
+                                    GoTo downn2
+                                End If
+                            Next j
+downn2:
+                            str3 = Mid(strr, s - counter + 1, counter - 1)
+                            numbers = CLng(str3)
+                            times = times + numbers * 60
+                        End If
+                        If str2 = "M" Then
+                            counter = 0
+                            For j = s To 1 Step -1
+                                temp = Mid(strr, j, 1)
+                                If temp <> "-" Then
+                                    counter = counter + 1
+                                Else
+                                    GoTo downn3
+                                End If
+                            Next j
+downn3:
+                            str3 = Mid(strr, s - counter + 1, counter - 1)
+                            numbers = CLng(str3)
+                            times = times + numbers
+                        End If
+                    Next s
+        End If
+        If (Worksheets("List").Cells(i, 1).Value <> "") Then
+            Worksheets("List").Cells(i, columnscounterlist - l).Value = times
+        End If
+    Next i
+Next l
+
+' (10) calculating KPI
+Worksheets("List").Columns("V").Value = Worksheets("List").Columns("Q").Value
+Worksheets("List").Columns("Q").Delete
+
+Worksheets("List").Cells(1, 24).Value = "ãíÒÇä ÇÑÒÔ ÂÝÑíäí ˜ÇÑãäÏ"
+Worksheets("List").Cells(1, 25).Value = "ÔÇÎÕ ÓÑÚÊ ÊÚãíÑ Ê˜äÓíä(ãíÇäíä ÑæÒ ÕÑÝ ÔÏå ÈÑÇí ÊÚãíÑ í˜ ÏÓÊÇå)"
+Worksheets("List").Cells(1, 26).Value = "ÔÇÎÕ ÏÞÊ ÊÚãíÑ Ê˜äÓíä(ÊÚÏÇÏ ÏÓÊÇå ÈÑÔÊí QC ÇÒ åÑ 10 ÏÓÊÇå)"
+Worksheets("List").Cells(1, 27).Value = "ÔÇÎÕ ÏÑÕÏ ÊÚãíÑÇÊ Ê˜äÓíä"
+
+For i = 2 To rowscounterlist Step 1
+     If (Worksheets("List").Cells(i, 1).Value <> "") Then
+        Worksheets("List").Cells(i, 24).Value = Worksheets("List").Cells(i, 4).Value - Worksheets("List").Cells(i, 9).Value - Worksheets("List").Cells(i, 10).Value
+        Worksheets("List").Cells(i, 25).Value = ((Worksheets("List").Cells(i, 17).Value / (24 * 60)) / Worksheets("List").Cells(i, 13).Value)
+        Worksheets("List").Cells(i, 26).Value = Worksheets("List").Cells(i, 21).Value
+        Worksheets("List").Cells(i, 27).Value = (Worksheets("List").Cells(i, 14).Value + Worksheets("List").Cells(i, 16).Value) / (Worksheets("List").Cells(i, 13).Value)
+    End If
+Next i
+
+For i = 2 To rowscounterlist Step 1
+    If ((Worksheets("List").Cells(i, 1).Value <> "") And (Worksheets("List").Cells(i, 24).Value = "")) Then
+        Worksheets("List").Cells(i, 24).Value = "-"
+    End If
+    If ((Worksheets("List").Cells(i, 1).Value <> "") And (Worksheets("List").Cells(i, 25).Value = "")) Then
+        Worksheets("List").Cells(i, 25).Value = "-"
+    End If
+    If ((Worksheets("List").Cells(i, 1).Value <> "") And (Worksheets("List").Cells(i, 26).Value = "")) Then
+        Worksheets("List").Cells(i, 26).Value = "-"
+    End If
+    If ((Worksheets("List").Cells(i, 1).Value <> "") And (Worksheets("List").Cells(i, 27).Value = "")) Then
+        Worksheets("List").Cells(i, 27).Value = "-"
+    End If
+Next i
+
+' (11) Designing format of tables
+
+For i = 2 To rowscounterlist Step 1
+    If IsNumeric(Worksheets("List").Cells(i, 25).Value) Then
+        Worksheets("List").Cells(i, 25).NumberFormat = "0.0"
+    End If
+    If IsNumeric(Worksheets("List").Cells(i, 26).Value) Then
+        Worksheets("List").Cells(i, 26).NumberFormat = "0.0"
+    End If
+    If IsNumeric(Worksheets("List").Cells(i, 27).Value) Then
+        Worksheets("List").Cells(i, 27).NumberFormat = "0.0"
+    End If
+Next i
+
+Worksheets("List").Columns("A:AA").ColumnWidth = 23
+Worksheets("List").Columns("A:AA").RowHeight = 35
+Worksheets("List").Columns("A:AA").VerticalAlignment = xlCenter
+Worksheets("List").Columns("A:AA").HorizontalAlignment = xlCenter
+
+For i = 1 To 21 Step 1
+    For j = 1 To laptechnumbermix + 1 Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+    For j = laptechnumbermix + 3 To laptechnumbermix + 2 + maintechnumbermix Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+    For j = laptechnumbermix + 2 + maintechnumbermix + 2 To laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+    For j = laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix + 2 To laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix + 1 + mobiletechnumbermix Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+    For j = laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix + 1 + mobiletechnumbermix + 2 To laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix + 1 + mobiletechnumbermix + 1 + receptiontechnumbermix Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+Next i
+
+For i = 24 To 27 Step 1
+    For j = 1 To laptechnumbermix + 1 Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+    For j = laptechnumbermix + 3 To laptechnumbermix + 2 + maintechnumbermix Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+    For j = laptechnumbermix + 2 + maintechnumbermix + 2 To laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+    For j = laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix + 2 To laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix + 1 + mobiletechnumbermix Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+    For j = laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix + 1 + mobiletechnumbermix + 2 To laptechnumbermix + 2 + maintechnumbermix + 1 + c4technumbermix + 1 + mobiletechnumbermix + 1 + receptiontechnumbermix Step 1
+        Worksheets("List").Cells(j, i).Borders.LineStyle = xlContinuous
+    Next j
+Next i
+Application.DisplayAlerts = False 'switching off the alert button
+Worksheets("Karsanji").Delete
+Application.DisplayAlerts = False 'switching off the alert button
+Worksheets("Ojrat").Delete
+Application.DisplayAlerts = False 'switching off the alert button
+Worksheets("Taakhir").Delete
+Application.DisplayAlerts = False 'switching off the alert button
+Worksheets("Ezafe Kari").Delete
+Application.DisplayAlerts = False 'switching off the alert button
+Worksheets("Kartabl").Delete
+Application.DisplayAlerts = False 'switching off the alert button
+Worksheets("Marjoo").Delete
+Application.DisplayAlerts = False 'switching off the alert button
+Worksheets("Takhfifat").Delete
+Application.DisplayAlerts = False 'switching off the alert button
+Worksheets("Paziresh").Delete
+    Sheets("List").Select
+    ActiveWindow.Zoom = 50
+End Sub
