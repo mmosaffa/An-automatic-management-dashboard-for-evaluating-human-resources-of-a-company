@@ -1,0 +1,2 @@
+# An-automatic-management-dashboard-for-evaluating-human-resources-of-a-company
+Designing an automation system to evaluate human resources. By VBA programming in Excel. This dashboard has been implemented in a service company. In this dashboard, three different KPI were devised in order to rank staffs of the company based on their performance, accuracy, and quickness. This dashboard can be framed in other companies.
